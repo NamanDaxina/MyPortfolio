@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Naman Daxina | Interactive Portfolio</title>
+<title>Naman Daxina | Portfolio</title>
 
 <style>
 *{
@@ -16,25 +16,16 @@ scroll-behavior:smooth;
 
 body{
 background:#0f172a;
-color:white;
-overflow-x:hidden;
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
+color:#e2e8f0;
+line-height:1.6;
 }
 
 header{
-position:fixed;
-width:100%;
-padding:15px;
-background:rgba(15,23,42,0.6);
-backdrop-filter:blur(10px);
+background:#1e293b;
+padding:20px;
 text-align:center;
-z-index:1000;
+position:sticky;
+top:0;
 }
 
 nav a{
@@ -42,210 +33,135 @@ margin:0 15px;
 color:#38bdf8;
 text-decoration:none;
 font-weight:bold;
-transition:0.3s;
-}
-
-nav a:hover{
-color:white;
-text-shadow:0 0 10px #38bdf8;
 }
 
 section{
-min-height:100vh;
-padding:120px 10%;
+padding:60px 10%;
+max-width:1000px;
+margin:auto;
 }
 
 h1{
-font-size:45px;
 text-align:center;
-margin-bottom:10px;
+margin-bottom:20px;
 }
 
-.typing{
-text-align:center;
+h2{
+margin-bottom:15px;
 color:#38bdf8;
-margin-bottom:40px;
-font-size:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
+background:#1e293b;
 padding:25px;
-margin:20px 0;
-border-radius:15px;
-transition:0.4s;
-transform-style:preserve-3d;
+border-radius:10px;
+margin-bottom:20px;
 }
 
-.card:hover{
-transform:rotateY(10deg) rotateX(5deg);
-box-shadow:0 0 25px rgba(56,189,248,0.6);
-}
-
-.hidden{
-opacity:0;
-transform:translateY(40px);
-transition:1s;
-}
-
-.show{
-opacity:1;
-transform:translateY(0);
-}
-
-.counter{
-font-size:30px;
-color:#38bdf8;
+ul{
+margin-left:20px;
 }
 
 footer{
 text-align:center;
 padding:20px;
-background:#111827;
+background:#1e293b;
 }
 </style>
 </head>
+
 <body>
 
-<canvas id="particles"></canvas>
-
 <header>
+<h1>Naman Daxina</h1>
+<p>Student | IT & Robotics Enthusiast | Problem Solver</p>
 <nav>
-<a href="#home">Home</a>
 <a href="#about">About</a>
+<a href="#skills">Skills</a>
 <a href="#projects">Projects</a>
-<a href="#stats">Stats</a>
+<a href="#education">Education</a>
+<a href="#contact">Contact</a>
 </nav>
 </header>
 
-<section id="home">
-<h1>Naman Daxina</h1>
-<div class="typing" id="typing"></div>
-</section>
-
-<section id="about" class="hidden">
-<h1>About Me</h1>
+<section id="about">
+<h2>Professional Summary</h2>
 <div class="card">
-Student passionate about IT and Robotics.  
-Building projects using Arduino, ESP32 & OpenCV.
+I am a motivated student with a strong interest in Information Technology, Robotics, and automation systems. 
+I actively participate in IT quizzes at district and state levels and enjoy building practical projects 
+using Arduino, ESP32, and computer vision technologies. 
+
+My goal is to continuously improve my technical skills, develop real-world problem-solving abilities, 
+and contribute to innovative technology solutions.
 </div>
 </section>
 
-<section id="projects" class="hidden">
-<h1>Projects</h1>
+<section id="skills">
+<h2>Technical Skills</h2>
+<div class="card">
+<ul>
+<li><strong>Programming:</strong> Basic C, Arduino Programming, HTML, CSS</li>
+<li><strong>Hardware:</strong> Arduino, ESP32-CAM, Sensors, Motors</li>
+<li><strong>Tools:</strong> VS Code, GitHub, Basic OpenCV</li>
+<li><strong>Concepts:</strong> Automation Systems, Human Detection, IoT Basics</li>
+</ul>
+</div>
+</section>
+
+<section id="projects">
+<h2>Projects</h2>
 
 <div class="card">
-Smart Gate Automation System
+<h3>Smart Gate Automation System</h3>
+<p>
+Developed a human-detection based automatic gate system using camera input and Arduino control. 
+The system detects a person and activates a motor to open the gate.
+</p>
+<ul>
+<li>Used camera-based detection</li>
+<li>Controlled motor using microcontroller</li>
+<li>Designed for real-world gate application</li>
+</ul>
 </div>
 
 <div class="card">
-ESP32-CAM Monitoring System
+<h3>ESP32-CAM Monitoring System</h3>
+<p>
+Built a real-time monitoring solution using ESP32-CAM module for surveillance purposes.
+</p>
+<ul>
+<li>Live camera streaming</li>
+<li>Wi-Fi connectivity</li>
+<li>Remote monitoring concept</li>
+</ul>
 </div>
 
 </section>
 
-<section id="stats" class="hidden">
-<h1>Achievements</h1>
-
+<section id="education">
+<h2>Education & Achievements</h2>
 <div class="card">
-IT Quiz Participations  
-<div class="counter" data-target="5">0</div>
+<p><strong>Current Level:</strong> Secondary School Student</p>
+<ul>
+<li>Participated in IT Quiz (District Level)</li>
+<li>Participated in IT Quiz (State Level)</li>
+<li>Active involvement in technical learning and projects</li>
+</ul>
 </div>
+</section>
 
+<section id="contact">
+<h2>Contact</h2>
 <div class="card">
-Projects Built  
-<div class="counter" data-target="12">0</div>
+<p><strong>Email:</strong> your-email@example.com</p>
+<p><strong>GitHub:</strong> https://github.com/yourusername</p>
+<p><strong>Location:</strong> India</p>
 </div>
-
 </section>
 
 <footer>
-© 2026 Naman Daxina
+© 2026 Naman Daxina | All Rights Reserved
 </footer>
-
-<script>
-
-// Typing Animation
-const text="IT Enthusiast | Robotics Innovator | Future Engineer";
-let i=0;
-function typing(){
-if(i<text.length){
-document.getElementById("typing").innerHTML+=text.charAt(i);
-i++;
-setTimeout(typing,50);
-}
-}
-typing();
-
-// Scroll Reveal
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("show");
-}
-});
-});
-document.querySelectorAll(".hidden").forEach(el=>observer.observe(el));
-
-// Counter Animation
-const counters=document.querySelectorAll(".counter");
-const speed=200;
-const counterObserver=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-const counter=entry.target;
-const update=()=>{
-const target=+counter.getAttribute("data-target");
-const count=+counter.innerText;
-const inc=target/speed;
-if(count<target){
-counter.innerText=Math.ceil(count+inc);
-setTimeout(update,20);
-}else{
-counter.innerText=target;
-}
-};
-update();
-}
-});
-});
-counters.forEach(c=>counterObserver.observe(c));
-
-// Particle Background
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let particles=[];
-for(let i=0;i<100;i++){
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2,
-dx:(Math.random()-0.5),
-dy:(Math.random()-0.5)
-});
-}
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-particles.forEach(p=>{
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fillStyle="#38bdf8";
-ctx.fill();
-p.x+=p.dx;
-p.y+=p.dy;
-if(p.x<0||p.x>canvas.width) p.dx*=-1;
-if(p.y<0||p.y>canvas.height) p.dy*=-1;
-});
-requestAnimationFrame(animate);
-}
-animate();
-
-</script>
 
 </body>
 </html>
