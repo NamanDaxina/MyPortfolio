@@ -434,9 +434,8 @@ document.querySelectorAll('#metrics').forEach(s=>cObs.observe(s));
 const tObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.t-line').forEach((l,i)=>{setTimeout(()=>l.classList.add('show'),i*110);});tObs.unobserve(e.target);}});},{threshold:.2});
 document.querySelectorAll('#terminal-sec').forEach(s=>tObs.observe(s));
 
+
 /* FORM */
-</script>
-</body>
 function sendMsg(e){
   e.preventDefault();
   const form=e.target;
@@ -448,10 +447,10 @@ function sendMsg(e){
   const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\nMessage:\n'+message);
   window.open('https://mail.google.com/mail/?view=cm&to=2011namandaxina@gmail.com&su='+subject+'&body='+body,'_blank');
   const sp=form.querySelector('.btn-cyber span');
-  sp.textContent='// Opening Gmail ✓';
+  sp.textContent='// Opening Gmail \u2713';
   form.querySelector('.btn-cyber').style.borderColor='#00ff88';
   form.querySelector('.btn-cyber').style.color='#00ff88';
-  setTimeout(()=>{sp.textContent='// Send Message →';form.querySelector('.btn-cyber').style.borderColor='';form.querySelector('.btn-cyber').style.color='';form.reset();},3000);
+  setTimeout(()=>{sp.textContent='// Send Message \u2192';form.querySelector('.btn-cyber').style.borderColor='';form.querySelector('.btn-cyber').style.color='';form.reset();},3000);
 }
 </script>
 </body>
