@@ -326,7 +326,7 @@ footer{padding:32px 60px;border-top:1px solid var(--border);display:flex;justify
     <div class="sec-label reveal">// Connect</div>
     <h2 class="sec-title reveal">Get In <span>Touch</span></h2>
     <div class="contact-grid">
-      <form class="contact-form reveal" onsubmit="sendMsg(event)">
+      <form class="contact-form reveal" onsubmit="sendMsg(event)" id="contactForm">
         <div class="cf-field"><div class="cf-label">Your Name</div><input class="cf-input" type="text" placeholder="John Doe"/></div>
         <div class="cf-field"><div class="cf-label">Email Address</div><input class="cf-input" type="email" placeholder="hello@example.com"/></div>
         <div class="cf-field"><div class="cf-label">Message</div><textarea class="cf-textarea" placeholder="Tell me about your project..."></textarea></div>
@@ -435,13 +435,23 @@ const tObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isInterse
 document.querySelectorAll('#terminal-sec').forEach(s=>tObs.observe(s));
 
 /* FORM */
+</script>
+</body>
 function sendMsg(e){
   e.preventDefault();
-  const sp=e.target.querySelector('.btn-cyber span');
-  sp.textContent='// Message Sent ✓';
-  e.target.querySelector('.btn-cyber').style.borderColor='#00ff88';
-  e.target.querySelector('.btn-cyber').style.color='#00ff88';
-  setTimeout(()=>{sp.textContent='// Send Message →';e.target.querySelector('.btn-cyber').style.borderColor='';e.target.querySelector('.btn-cyber').style.color='';e.target.reset();},3000);
+  const form=e.target;
+  const name=form.querySelector('input[type="text"]').value.trim();
+  const email=form.querySelector('input[type="email"]').value.trim();
+  const message=form.querySelector('textarea').value.trim();
+  if(!name||!email||!message){alert('Please fill all fields.');return;}
+  const subject=encodeURIComponent('Portfolio Message from '+name);
+  const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\nMessage:\n'+message);
+  window.open('https://mail.google.com/mail/?view=cm&to=2011namandaxina@gmail.com&su='+subject+'&body='+body,'_blank');
+  const sp=form.querySelector('.btn-cyber span');
+  sp.textContent='// Opening Gmail ✓';
+  form.querySelector('.btn-cyber').style.borderColor='#00ff88';
+  form.querySelector('.btn-cyber').style.color='#00ff88';
+  setTimeout(()=>{sp.textContent='// Send Message →';form.querySelector('.btn-cyber').style.borderColor='';form.querySelector('.btn-cyber').style.color='';form.reset();},3000);
 }
 </script>
 </body>
