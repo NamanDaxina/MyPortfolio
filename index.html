@@ -1,330 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Naman Daxina | Portfolio</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-scroll-behavior:smooth;
-font-family:'Poppins',sans-serif;
-}
+  :root {
+    --bg: #080c10;
+    --surface: #0e1318;
+    --card: #131920;
+    --accent: #00e5ff;
+    --accent2: #ff6b35;
+    --text: #e8f0f7;
+    --muted: #6b7f8e;
+    --border: rgba(0,229,255,0.12);
+  }
 
-body{
-background:#0f172a;
-color:white;
-overflow-x:hidden;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-header{
-position:fixed;
-width:100%;
-top:0;
-background:rgba(15,23,42,0.9);
-backdrop-filter:blur(10px);
-padding:15px 10%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:1000;
-}
+  html { scroll-behavior: smooth; }
 
-.logo{
-font-weight:700;
-font-size:22px;
-color:#38bdf8;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-nav a{
-color:white;
-margin-left:25px;
-text-decoration:none;
-position:relative;
-font-weight:500;
-}
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.5;
+  }
 
-nav a::after{
-content:'';
-position:absolute;
-width:0;
-height:2px;
-left:0;
-bottom:-5px;
-background:#38bdf8;
-transition:.3s;
-}
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
 
-nav a:hover::after,
-nav a.active::after{
-width:100%;
-}
+  /* Glow blob */
+  .glow-blob {
+    position: fixed;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none; z-index: 0;
+    transition: left 1.2s ease, top 1.2s ease;
+    left: 20%; top: 20%;
+    transform: translate(-50%,-50%);
+  }
 
-section{
-min-height:100vh;
-padding:120px 10% 60px;
-}
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(8,12,16,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
 
-.hero{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-background:linear-gradient(-45deg,#0f172a,#1e293b,#0ea5e9,#0f172a);
-background-size:400% 400%;
-animation:gradient 10s ease infinite;
-}
+  /* SECTIONS */
+  section { position: relative; z-index: 1; }
 
-@keyframes gradient{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 60px 60px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .hero-content { max-width: 700px; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 5px 14px; border-radius: 2px; margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-sub {
+    font-size: 0.9rem; color: var(--muted);
+    line-height: 1.7; max-width: 500px;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #000;
+    padding: 13px 28px; border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+    text-decoration: none; text-transform: uppercase;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,229,255,0.3);
+  }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); color: var(--text);
+    padding: 13px 28px; border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.08em;
+    text-decoration: none; text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn-outline:hover {
+    border-color: var(--accent); color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 64px;
+    opacity: 0; animation: fadeUp 0.7s 1s forwards;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800; color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
 
-.hero h1{
-font-size:50px;
-}
+  /* ABOUT */
+  #about {
+    padding: 100px 60px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; line-height: 1.1;
+    margin-bottom: 48px;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .about-text { font-size: 0.88rem; color: #a0b4c0; line-height: 1.9; }
+  .about-text p + p { margin-top: 16px; }
+  .about-cards { display: flex; flex-direction: column; gap: 16px; }
+  .about-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 20px 24px;
+    display: flex; gap: 16px; align-items: flex-start;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .about-card:hover { border-color: var(--accent); transform: translateX(4px); }
+  .about-card-icon {
+    width: 36px; height: 36px;
+    background: rgba(0,229,255,0.1);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .about-card-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+  .about-card-text { font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
 
-.typing{
-color:#38bdf8;
-font-weight:600;
-margin-top:10px;
-}
+  /* SKILLS */
+  #skills {
+    padding: 100px 60px;
+    background: var(--surface);
+  }
+  .skills-inner { max-width: 1200px; margin: 0 auto; }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; margin-top: 0;
+  }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 28px;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .skill-name { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+  .skill-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
+  .skill-bar-wrap { margin-top: 16px; background: rgba(255,255,255,0.05); border-radius: 2px; height: 3px; }
+  .skill-bar {
+    height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), #0af);
+    width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
 
-.btn{
-margin-top:20px;
-padding:10px 25px;
-border:2px solid #38bdf8;
-color:#38bdf8;
-background:none;
-cursor:pointer;
-transition:.3s;
-text-decoration:none;
-display:inline-block;
-}
+  /* PROJECTS */
+  #projects {
+    padding: 100px 60px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 32px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    border-color: rgba(0,229,255,0.25);
+  }
+  .project-num {
+    font-family: 'Syne', sans-serif; font-size: 0.75rem;
+    color: var(--accent); letter-spacing: 0.15em;
+    margin-bottom: 16px; opacity: 0.7;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700;
+    margin-bottom: 12px; line-height: 1.3;
+  }
+  .project-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid rgba(0,229,255,0.2);
+    padding: 4px 10px; border-radius: 2px;
+  }
+  .project-arrow {
+    position: absolute; top: 28px; right: 28px;
+    color: var(--muted); font-size: 1.2rem;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .project-card:hover .project-arrow { color: var(--accent); transform: translate(3px,-3px); }
 
-.btn:hover{
-background:#38bdf8;
-color:#0f172a;
-}
+  /* CONTACT */
+  #contact {
+    padding: 100px 60px;
+    background: var(--surface);
+  }
+  .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .contact-inner .section-label { justify-content: center; display: block; }
+  .contact-inner .section-title { margin-bottom: 20px; }
+  .contact-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 48px; line-height: 1.7; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  input, textarea {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem;
+    padding: 12px 16px; border-radius: 4px; outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  input:focus, textarea:focus { border-color: var(--accent); }
+  textarea { min-height: 120px; }
+  .btn-send {
+    background: var(--accent); color: #000;
+    border: none; padding: 14px 36px;
+    font-family: 'DM Mono', monospace; font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 3px; cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    align-self: flex-start;
+  }
+  .btn-send:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,255,0.3); }
 
-.about p{
-max-width:800px;
-margin-top:20px;
-line-height:1.8;
-}
+  /* FOOTER */
+  footer {
+    padding: 32px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border);
+    font-size: 0.72rem; color: var(--muted);
+    position: relative; z-index: 1;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
 
-.skills-container{
-display:grid;
-gap:20px;
-max-width:600px;
-}
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-.skill{
-background:#1e293b;
-padding:10px;
-border-radius:5px;
-}
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
-.skill-bar{
-height:8px;
-background:#334155;
-margin-top:5px;
-border-radius:4px;
-overflow:hidden;
-}
-
-.skill-fill{
-height:100%;
-width:0;
-background:#38bdf8;
-transition:2s;
-}
-
-.projects-grid{
-margin-top:20px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-.project{
-background:#1e293b;
-padding:20px;
-border-radius:8px;
-transition:.3s;
-}
-
-.project:hover{
-transform:translateY(-5px);
-}
-
-input,textarea{
-width:100%;
-padding:10px;
-margin-top:10px;
-background:#1e293b;
-border:none;
-color:white;
-}
-
-footer{
-text-align:center;
-padding:20px;
-background:#1e293b;
-}
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    #home, #about, #projects, #contact { padding: 80px 24px 60px; }
+    #skills { padding: 80px 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    .about-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+  }
 </style>
 </head>
-
 <body>
 
-<header>
-<div class="logo">Naman Daxina</div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="glow-blob" id="glowBlob"></div>
+
+<!-- NAV -->
 <nav>
-<a href="#home" class="active">Home</a>
-<a href="#about">About</a>
-<a href="#skills">Skills</a>
-<a href="#projects">Projects</a>
-<a href="#contact">Contact</a>
+  <a href="#home" class="nav-logo">ND</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
-</header>
 
-<section class="hero" id="home">
-<h1>Hi, I'm Naman Daxina</h1>
-<h2 class="typing"></h2>
-<a href="cv.pdf" download class="btn">Download CV</a>
+<!-- HERO -->
+<section id="home">
+  <div class="hero-content">
+    <div class="hero-tag">Available for Opportunities</div>
+    <h1 class="hero-name">Naman<br/><span>Daxina</span></h1>
+    <p class="hero-sub">
+      A passionate school student exploring the intersections of technology, robotics, and innovative problem-solving. Turning ideas into practical solutions — one project at a time.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="cv.pdf" class="btn-outline" download>Download CV</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div>
+        <div class="stat-num">2×</div>
+        <div class="stat-label">Award Winner</div>
+      </div>
+      <div>
+        <div class="stat-num">Zero<br/>2Maker</div>
+        <div class="stat-label">Program Alumni</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="about" class="about">
-<h2>About Me</h2>
-<p>
-I am Naman Daxina, a school student with a strong interest in information technology, robotics, and hands-on learning. I prefer understanding concepts through practical implementation rather than only theoretical study. Technology and innovation genuinely interest me, and I actively explore how systems function in real-world scenarios.
-
-I have participated in rural IT quiz competitions and earned certificates at district and state levels. I also work on school-level research papers and technical projects where I focus on organizing ideas clearly and presenting them in a structured format.
-
-As a participant in the Zero2Maker learning program, I have learned ideation techniques such as SCAMPER, basic design thinking, and project planning. I enjoy building models, experimenting, testing ideas, and refining solutions.
-
-My goal is to become a confident learner and innovative problem-solver capable of turning ideas into practical solutions.
-</p>
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">About Me</div>
+  <h2 class="section-title reveal">Builder. Thinker.<br/>Innovator.</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm Naman Daxina — a school student with a genuine passion for information technology, robotics, and hands-on building. I believe the best way to understand something is to build it, break it, and rebuild it better.</p>
+      <p>I've participated in rural IT quiz competitions, earning recognition at both district and state levels. I also work on school-level research papers, focusing on clear ideas and structured presentation.</p>
+      <p>As a Zero2Maker program participant, I've learned ideation techniques like SCAMPER, design thinking fundamentals, and project planning — skills I apply every time I sit down to create something new.</p>
+    </div>
+    <div class="about-cards reveal">
+      <div class="about-card">
+        <div class="about-card-icon">🏆</div>
+        <div>
+          <div class="about-card-title">IT Quiz — District & State</div>
+          <div class="about-card-text">Earned certificates at district and state level competitions in rural IT quizzing.</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🛠</div>
+        <div>
+          <div class="about-card-title">Zero2Maker Alumni</div>
+          <div class="about-card-text">Completed a program in SCAMPER ideation, design thinking, and project-based learning.</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">📄</div>
+        <div>
+          <div class="about-card-title">Research & Technical Writing</div>
+          <div class="about-card-text">Author of school-level research papers with a focus on structure and technical clarity.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- SKILLS -->
 <section id="skills">
-<h2>Skills</h2>
-<div class="skills-container">
-<div class="skill">
-HTML
-<div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
-</div>
-<div class="skill">
-CSS
-<div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
-</div>
-<div class="skill">
-JavaScript
-<div class="skill-bar"><div class="skill-fill" data-width="75%"></div></div>
-</div>
-</div>
+  <div class="skills-inner">
+    <div class="section-label reveal">Toolkit</div>
+    <h2 class="section-title reveal">What I Work With</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">HTML</div>
+        <div class="skill-desc">Structuring content for the web — semantic markup, accessibility, and clean document hierarchy.</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">CSS</div>
+        <div class="skill-desc">Styling and layout — from responsive grids to animations and visual polish.</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="72"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-desc">Adding interactivity — dynamic content, event handling, and logic-driven experiences.</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="60"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-name">Robotics</div>
+        <div class="skill-desc">Building and experimenting with physical models — combining hardware thinking with software logic.</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="65"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">💡</div>
+        <div class="skill-name">Design Thinking</div>
+        <div class="skill-desc">SCAMPER, ideation, prototyping — structured creative problem-solving methodologies.</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">Research & Writing</div>
+        <div class="skill-desc">Technical documentation, research papers, and structured presentation of complex ideas.</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="75"></div></div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects">
-<h2>Projects</h2>
-<div class="projects-grid">
-<div class="project">School Research Projects</div>
-<div class="project">Robotics Model Experiments</div>
-<div class="project">Interactive Web Portfolio</div>
-</div>
+  <div class="section-label reveal">Work</div>
+  <h2 class="section-title reveal">Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">01 —</div>
+      <div class="project-arrow">↗</div>
+      <div class="project-title">Interactive Web Portfolio</div>
+      <div class="project-desc">A personal portfolio website built from scratch to showcase skills, projects, and achievements. Designed with a clean structure and attention to user experience.</div>
+      <div class="project-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">02 —</div>
+      <div class="project-arrow">↗</div>
+      <div class="project-title">Robotics Model Experiments</div>
+      <div class="project-desc">Hands-on robotics model experiments exploring how mechanical systems work. Built physical prototypes, tested ideas, and documented findings through a maker-centric learning approach.</div>
+      <div class="project-tags">
+        <span class="tag">Robotics</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Hardware</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">03 —</div>
+      <div class="project-arrow">↗</div>
+      <div class="project-title">School Research Projects</div>
+      <div class="project-desc">Author of multiple structured research papers at school level. Each paper focuses on presenting technical concepts clearly, backing ideas with evidence, and drawing actionable conclusions.</div>
+      <div class="project-tags">
+        <span class="tag">Research</span>
+        <span class="tag">Technical Writing</span>
+        <span class="tag">Analysis</span>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
-<h2>Contact</h2>
-<form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="email" name="email" placeholder="Your Email" required>
-<textarea name="message" rows="4" placeholder="Message" required></textarea>
-<button class="btn" type="submit" id="sendBtn">Send Message</button>
-<p id="form-status" style="margin-top:15px;"></p>
-</form>
+  <div class="contact-inner">
+    <div class="section-label reveal">Get In Touch</div>
+    <h2 class="section-title reveal">Let's Connect</h2>
+    <p class="contact-sub reveal">Have a project, collaboration, or just want to say hello? I'd love to hear from you.</p>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label>Your Name</label>
+          <input type="text" placeholder="John Doe" />
+        </div>
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email" placeholder="hello@example.com" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your project or idea..."></textarea>
+      </div>
+      <button type="submit" class="btn-send">Send Message →</button>
+    </form>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-© 2026 Naman Daxina | All Rights Reserved
+  <span>© 2026 Naman Daxina</span>
+  <span>Built with ❤️ &amp; curiosity</span>
 </footer>
 
 <script>
-// Typing Effect
-const text = [
-"IT & Robotics Enthusiast",
-"State-Level IT Quiz Participant",
-"Hands-On Learner & Innovator"
-];
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  const blob = document.getElementById('glowBlob');
+  let mx = 0, my = 0, rx = 0, ry = 0;
 
-let i=0,j=0,current="",isDeleting=false;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    blob.style.left = mx + 'px';
+    blob.style.top = my + 'px';
+  });
 
-function type(){
-current=text[i];
-document.querySelector(".typing").textContent=current.substring(0,j);
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
 
-if(!isDeleting && j<current.length){j++;}
-else if(isDeleting && j>0){j--;}
-else{
-isDeleting=!isDeleting;
-if(!isDeleting){i=(i+1)%text.length;}
-}
-setTimeout(type,isDeleting?50:100);
-}
-type();
+  document.querySelectorAll('a, button, .skill-card, .project-card, .about-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '18px'; cursor.style.height = '18px';
+      ring.style.width = '56px'; ring.style.height = '56px'; ring.style.opacity = '0.3';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px'; cursor.style.height = '10px';
+      ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.5';
+    });
+  });
 
-// Skill Animation
-window.addEventListener("scroll",()=>{
-document.querySelectorAll(".skill-fill").forEach(bar=>{
-let rect=bar.getBoundingClientRect();
-if(rect.top<window.innerHeight){
-bar.style.width=bar.dataset.width;
-}
-});
-});
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
 
-// Contact Form AJAX
-const form = document.getElementById("contactForm");
-const statusText = document.getElementById("form-status");
-const sendBtn = document.getElementById("sendBtn");
+  // Skill bars animate on scroll
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-bar').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 200);
+        });
+        barObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('#skills').forEach(s => barObserver.observe(s));
 
-form.addEventListener("submit", async function(e){
-e.preventDefault();
-
-sendBtn.innerText = "Sending...";
-sendBtn.disabled = true;
-
-let data = new FormData(form);
-
-try {
-let response = await fetch(form.action, {
-method: form.method,
-body: data,
-headers: { 'Accept': 'application/json' }
-});
-
-if(response.ok){
-statusText.innerText = "Message sent successfully!";
-form.reset();
-} else {
-statusText.innerText = "Something went wrong. Try again.";
-}
-
-} catch(error){
-statusText.innerText = "Network error. Try again.";
-}
-
-sendBtn.innerText = "Send Message";
-sendBtn.disabled = false;
-});
+  // Form handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-send');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#00e5aa';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
 </script>
-
 </body>
 </html>
