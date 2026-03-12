@@ -266,6 +266,7 @@ footer{padding:32px 60px;border-top:1px solid var(--border);display:flex;justify
 }
 @media(max-width:540px){.skills-grid,.projects-grid,.metrics-grid{grid-template-columns:1fr;}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -469,7 +470,7 @@ footer{padding:32px 60px;border-top:1px solid var(--border);display:flex;justify
       <div class="contact-info reveal-right">
         <div class="ci"><div class="ci-icon">⬡</div><div><div class="ci-label">Status</div><div class="ci-val">Open for collaborations</div></div></div>
         <div class="ci"><div class="ci-icon">◎</div><div><div class="ci-label">Location</div><div class="ci-val">India</div></div></div>
-        <div class="ci"><div class="ci-icon">✦</div><div><div class="ci-label">Email</div><div class="ci-val">2011namandaxina@gmail.com</div></div></div>
+        <div class="ci"><div class="ci-icon">✦</div><div><div class="ci-label">Email</div><div class="ci-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="60525051510e010d010e040118090e0120070d01090c4e030f0d">[email&#160;protected]</a></div></div></div>
         <div class="ci"><div class="ci-icon">⚡</div><div><div class="ci-label">Portfolio</div><div class="ci-val">namandaxina.github.io</div></div></div>
       </div>
     </div>
@@ -482,7 +483,7 @@ footer{padding:32px 60px;border-top:1px solid var(--border);display:flex;justify
   <div class="footer-status"><div class="sdot"></div>ONLINE</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ══ LOADER ══ */
 const loaderMsgs=['INITIALIZING SYSTEM...','LOADING PARTICLE ENGINE...','WARMING AURORA SHADER...','MOUNTING HOLOGRAM CORE...','SYSTEM READY.'];
 let lp=0,lPct=0;
@@ -655,20 +656,35 @@ document.querySelectorAll('#metrics').forEach(s=>cObs.observe(s));
 const tObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.tl').forEach((l,i)=>{setTimeout(()=>l.classList.add('show'),i*120);});tObs.unobserve(e.target);}});},{threshold:.15});
 document.querySelectorAll('#terminal-sec').forEach(s=>tObs.observe(s));
 
-/* ══ FORM ══ */
+
+/* ══ EMAILJS FORM ══ */
+emailjs.init('EXyZ7GZYK_kDuGH9g');
+
 function sendMsg(e){
   e.preventDefault();
   const form=e.target;
   const name=form.querySelector('input[type="text"]').value.trim();
   const email=form.querySelector('input[type="email"]').value.trim();
   const message=form.querySelector('textarea').value.trim();
-  const subject=encodeURIComponent('Portfolio Message from '+name);
-  const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\nMessage:\n'+message);
-  window.open('https://mail.google.com/mail/?view=cm&to=2011namandaxina@gmail.com&su='+subject+'&body='+body,'_blank');
   const btn=document.getElementById('sendBtnTxt');
-  btn.textContent='✓ Opening Gmail...';
-  form.style.borderColor='#00ff88';
-  setTimeout(()=>{btn.textContent='⬡ Send via Gmail →';form.reset();},3000);
+
+  btn.textContent='⟳ Sending...';
+
+  emailjs.send('service_l7klxxq','qaliddj',{
+    name: name,
+    email: email,
+    message: message,
+    title: 'Portfolio Contact',
+    time: new Date().toLocaleString()
+  }).then(()=>{
+    btn.textContent='✓ Message Sent!';
+    form.reset();
+    setTimeout(()=>{ btn.textContent='⬡ Send via Gmail →'; },3000);
+  }).catch(err=>{
+    console.error(err);
+    btn.textContent='✗ Failed — Try Again';
+    setTimeout(()=>{ btn.textContent='⬡ Send via Gmail →'; },3000);
+  });
 }
 </script>
 </body>
